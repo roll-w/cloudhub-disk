@@ -1,8 +1,6 @@
 # Cloudhub Disk Frontend
 
-Frontend for Cloudhub Disk.
-
-**THIS NOT A PART OF THE _CLOUDHUB_ PROJECT.**
+Frontend of Cloudhub Disk.
 
 ## Project Setup
 
