@@ -33,7 +33,7 @@ import java.lang.reflect.Method;
 @Component
 public class BuiltinOperateAspect {
 
-    @Before("@annotation(org.huel.cloudhub.client.disk.domain.operatelog.context.BuiltinOperate)")
+    @Before("@annotation(tech.rollw.disk.web.domain.operatelog.context.BuiltinOperate)")
     public void recordOperateType(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();

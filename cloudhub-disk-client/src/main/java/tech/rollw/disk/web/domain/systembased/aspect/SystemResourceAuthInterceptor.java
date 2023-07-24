@@ -46,7 +46,7 @@ public class SystemResourceAuthInterceptor {
     }
 
 
-    @Before("@annotation(org.huel.cloudhub.client.disk.domain.systembased.SystemResourceAuthenticate)")
+    @Before("@annotation(tech.rollw.disk.web.domain.systembased.SystemResourceAuthenticate)")
     public void beforeAuthentication(@NonNull JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
