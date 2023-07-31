@@ -545,7 +545,7 @@ const router = createRouter({
             name: index,
             component: () => import("@/views/user/HomeView.vue"),
             meta: {
-                title: "Cloudhub 法律案件资料库 - 可靠、专业的法律案件资料库",
+                title: "Cloudhub 个人文件资料库 - 可靠、专业的个人文件资料库",
                 originalTitle: true
             },
         },
@@ -622,10 +622,10 @@ const router = createRouter({
     ]
 })
 
-const defaultTitle = "Cloudhub 法律案件资料库";
+const defaultTitle = "Cloudhub 个人文件资料库";
 
 export const getTitleSuffix = () => {
-    return " | Cloudhub 法律案件资料库 "
+    return " | Cloudhub 个人文件资料库 "
 }
 
 router.afterEach((to, from) => {
