@@ -17,7 +17,7 @@
 <template>
     <div class="p-5">
         <n-h1>
-            Cloudhub 后台系统管理首页
+            后台系统管理首页
         </n-h1>
 
         <div class="py-3">

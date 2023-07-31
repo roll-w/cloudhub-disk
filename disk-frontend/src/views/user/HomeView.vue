@@ -29,10 +29,10 @@
                 </div>
                 <div class="flex flex-col p-5 flex-1">
                     <div class="leading-tight sm:leading-tight text-4xl sm:text-6xl font-extrabold text-black ">
-                        Cloudhub<br>法律案件资料库
+                        Cloudhub<br>个人文件资料库
                     </div>
                     <div class="flex-fill py-7 text-[#4f4662] text-2xl leading-relaxed sm:w-2/5">
-                        Cloudhub 法律案件资料库是一个专业的法律文件资料库。可以快速、安全、便捷的管理您的法律文件资料。
+                        Cloudhub 个人文件资料库是一个专业的个人文件资料库。可以快速、安全、便捷的管理您的个人文件资料。
                     </div>
                 </div>
 

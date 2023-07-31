@@ -238,15 +238,6 @@ const quickOptions = [
         value: '文件类型'
     },
     {
-        value: '文书类型'
-    },
-    {
-        value: '诉讼类型'
-    },
-    {
-        value: '审理阶段'
-    },
-    {
         value: '创建者'
     },
     {
