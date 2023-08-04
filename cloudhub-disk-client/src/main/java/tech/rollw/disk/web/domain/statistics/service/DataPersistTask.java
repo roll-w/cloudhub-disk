@@ -16,15 +16,17 @@
 
 package tech.rollw.disk.web.domain.statistics.service;
 
+import org.quartz.Scheduler;
 import tech.rollw.disk.web.domain.statistics.Statistics;
 import tech.rollw.disk.web.domain.statistics.repository.StatisticsRepository;
 import tech.rollw.disk.web.jobs.JobEvent;
 import tech.rollw.disk.web.jobs.JobRegistry;
 import tech.rollw.disk.web.jobs.JobTask;
-import tech.rollw.disk.web.jobs.trigger.TimeJobTrigger;
+import tech.rollw.disk.web.jobs.trigger.JavaTimerTimeJobTrigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import tech.rollw.disk.web.jobs.trigger.QuartzTimeJobTrigger;
 
 import java.util.List;
 import java.util.Map;
@@ -46,17 +48,18 @@ public class DataPersistTask implements JobTask {
             new ConcurrentHashMap<>();
 
     public DataPersistTask(JobRegistry jobRegistry,
+                           Scheduler scheduler,
                            StatisticsRepository statisticsRepository,
                            List<StatisticsPersistable> statisticsPersistables) {
         this.statisticsRepository = statisticsRepository;
         this.statisticsPersistables = statisticsPersistables;
         jobRegistry.register(
                 this,
-                TimeJobTrigger.of("0 0/5 * * * ?")
+                QuartzTimeJobTrigger.of("0 0/5 * * * ?", scheduler)
         );
         jobRegistry.register(
                 this,
-                TimeJobTrigger.of(System.currentTimeMillis() + 1000 * 10)
+                JavaTimerTimeJobTrigger.of(System.currentTimeMillis() + 1000 * 10)
         );
     }
 

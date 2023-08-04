@@ -16,6 +16,7 @@
 
 package tech.rollw.disk.web.domain.statistics.service;
 
+import org.quartz.Scheduler;
 import tech.rollw.disk.web.domain.statistics.DatedStatistics;
 import tech.rollw.disk.web.domain.statistics.Statistics;
 import tech.rollw.disk.web.domain.statistics.repository.DatedStatisticsRepository;
@@ -23,10 +24,11 @@ import tech.rollw.disk.web.domain.statistics.repository.StatisticsRepository;
 import tech.rollw.disk.web.jobs.JobEvent;
 import tech.rollw.disk.web.jobs.JobRegistry;
 import tech.rollw.disk.web.jobs.JobTask;
-import tech.rollw.disk.web.jobs.trigger.TimeJobTrigger;
+import tech.rollw.disk.web.jobs.trigger.JavaTimerTimeJobTrigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import tech.rollw.disk.web.jobs.trigger.QuartzTimeJobTrigger;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -57,6 +59,7 @@ public class DataArchivingTask implements JobTask {
             new HashMap<>();
 
     public DataArchivingTask(JobRegistry jobRegistry,
+                             Scheduler scheduler,
                              DatedStatisticsRepository datedStatisticsRepository,
                              StatisticsRepository statisticsRepository) {
         this.datedStatisticsRepository = datedStatisticsRepository;
@@ -64,11 +67,11 @@ public class DataArchivingTask implements JobTask {
         jobRegistry.register(
                 this,
                 // execute at 4:00 am every day
-                TimeJobTrigger.of("0 0 4 * * ?")
+                QuartzTimeJobTrigger.of("0 0 4 * * ?", scheduler)
         );
         jobRegistry.register(
                 this,
-                TimeJobTrigger.of(System.currentTimeMillis() + DELAY)
+                JavaTimerTimeJobTrigger.of(System.currentTimeMillis() + DELAY)
         );
     }
 

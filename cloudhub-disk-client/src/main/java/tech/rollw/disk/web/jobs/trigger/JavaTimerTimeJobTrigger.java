@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @author RollW
  */
-public class TimeJobTrigger implements JobTrigger, JobEvent {
+public class JavaTimerTimeJobTrigger implements JobTrigger, JobEvent {
     private final TimeTriggerType timeTriggerType;
 
     private JobTask jobTask;
@@ -41,7 +41,7 @@ public class TimeJobTrigger implements JobTrigger, JobEvent {
 
     private Timer timer;
 
-    public TimeJobTrigger(TimeTriggerType timeTriggerType) {
+    public JavaTimerTimeJobTrigger(TimeTriggerType timeTriggerType) {
         this.timeTriggerType = timeTriggerType;
         setJobStatus(JobStatus.NOT_STARTED);
     }
@@ -143,7 +143,7 @@ public class TimeJobTrigger implements JobTrigger, JobEvent {
 
     @Override
     public String getName() {
-        return "TimeTrigger[" + timeTriggerType.getKind() +
+        return "JavaTimeTrigger[" + timeTriggerType.getKind() +
                 ", " + formatTimeOrCron()
                 + "]";
     }
@@ -190,11 +190,11 @@ public class TimeJobTrigger implements JobTrigger, JobEvent {
         return this;
     }
 
-    public static TimeJobTrigger of(long time) {
-        return new TimeJobTrigger(TimeTriggerType.of(time));
+    public static JavaTimerTimeJobTrigger of(long time) {
+        return new JavaTimerTimeJobTrigger(TimeTriggerType.of(time));
     }
 
-    public static TimeJobTrigger of(String cron) {
-        return new TimeJobTrigger(TimeTriggerType.of(cron));
+    public static JavaTimerTimeJobTrigger of(String cron) {
+        return new JavaTimerTimeJobTrigger(TimeTriggerType.of(cron));
     }
 }
