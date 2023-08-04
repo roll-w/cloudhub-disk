@@ -35,7 +35,13 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import space.lingu.NonNull;
+import tech.rollw.disk.common.PageableHttpResponseBody;
+import tech.rollw.disk.common.data.page.Page;
+import tech.rollw.disk.web.domain.systembased.ContextThread;
+import tech.rollw.disk.web.domain.systembased.ContextThreadAware;
+import tech.rollw.disk.web.domain.systembased.paged.PageableContext;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -45,12 +51,15 @@ import java.util.Objects;
 public class ControllerResponseBodyAdvice implements ResponseBodyAdvice<Object> {
     private final ErrorCodeMessageProvider errorCodeMessageProvider;
     private final MessageSource messageSource;
+    private final ContextThreadAware<PageableContext> contextThreadAware;
     private static final Logger logger = LoggerFactory.getLogger(ControllerResponseBodyAdvice.class);
 
     public ControllerResponseBodyAdvice(ErrorCodeMessageProvider errorCodeMessageProvider,
-                                        MessageSource messageSource) {
+                                        MessageSource messageSource,
+                                        ContextThreadAware<PageableContext> contextThreadAware) {
         this.errorCodeMessageProvider = errorCodeMessageProvider;
         this.messageSource = messageSource;
+        this.contextThreadAware = contextThreadAware;
     }
 
     @Override
@@ -60,7 +69,7 @@ public class ControllerResponseBodyAdvice implements ResponseBodyAdvice<Object> 
     }
 
     private boolean checkIfJsonConverter(Class<? extends HttpMessageConverter<?>> converterType) {
-        // or other json converter
+        // or other json converters
         return converterType.equals(MappingJackson2HttpMessageConverter.class);
     }
 
@@ -80,6 +89,20 @@ public class ControllerResponseBodyAdvice implements ResponseBodyAdvice<Object> 
         }
         if (!(obj instanceof HttpResponseBody<?> body)) {
             return obj;
+        }
+        Object data = body.getData();
+        if (data instanceof List<?> dataList &&
+                !(body instanceof PageableHttpResponseBody<?>)) {
+            ContextThread<PageableContext> contextThread =
+                    contextThreadAware.getContextThread();
+            if (contextThread.hasContext()) {
+                PageableContext pageableContext =
+                        contextThread.getContext();
+                @SuppressWarnings("unchecked")
+                Page<Object> objectPage = (Page<Object>)
+                        pageableContext.toPage(dataList);
+                body = body.fork(objectPage);
+            }
         }
         HttpMethod method = request.getMethod();
         String rawTip = tryGetRawTip(body);
