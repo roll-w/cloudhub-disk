@@ -16,21 +16,16 @@
 
 package tech.rollw.disk.web.configuration;
 
-import tech.rollw.disk.web.domain.share.common.UserShareErrorCode;
-import tech.rollw.disk.web.domain.storagepermission.common.StoragePermissionErrorCode;
-import tech.rollw.disk.web.domain.tag.common.ContentTagErrorCode;
-import tech.rollw.disk.web.domain.userstorage.common.StorageErrorCode;
-import tech.rollw.disk.common.ErrorCodeFinderChain;
-import tech.rollw.disk.common.ErrorCodeMessageProvider;
-import tech.rollw.disk.common.IoErrorCode;
-import tech.rollw.disk.common.AuthErrorCode;
-import tech.rollw.disk.common.DataErrorCode;
-import tech.rollw.disk.common.ErrorCodeMessageProviderImpl;
-import tech.rollw.disk.common.UserErrorCode;
-import tech.rollw.disk.common.WebCommonErrorCode;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tech.rollw.disk.common.*;
+import tech.rollw.disk.web.domain.favorites.common.FavoriteErrorCode;
+import tech.rollw.disk.web.domain.share.common.UserShareErrorCode;
+import tech.rollw.disk.web.domain.storagepermission.common.StoragePermissionErrorCode;
+import tech.rollw.disk.web.domain.tag.common.ContentTagErrorCode;
+import tech.rollw.disk.web.domain.usergroup.common.UserGroupErrorCode;
+import tech.rollw.disk.web.domain.userstorage.common.StorageErrorCode;
 
 /**
  * @author RollW
@@ -54,6 +49,8 @@ public class ErrorCodeConfiguration {
                 StorageErrorCode.getFinderInstance(),
                 StoragePermissionErrorCode.getFinderInstance(),
                 UserShareErrorCode.getFinderInstance(),
+                UserGroupErrorCode.getFinderInstance(),
+                FavoriteErrorCode.getFinderInstance(),
                 ContentTagErrorCode.getFinderInstance()
         );
     }
