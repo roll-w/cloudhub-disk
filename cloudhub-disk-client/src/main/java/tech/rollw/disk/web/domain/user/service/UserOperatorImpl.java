@@ -96,9 +96,7 @@ public class UserOperatorImpl implements UserOperator {
     @Override
     public UserOperator delete() throws BusinessRuntimeException {
         checkDelete();
-        userBuilder
-                .setCanceled(true)
-                .build();
+        userBuilder.setCanceled(true);
         return updateInternal();
     }
 

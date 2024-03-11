@@ -48,6 +48,6 @@ public class UserInfoFormatValidateFilter implements UserInfoFilter {
     }
 
     private boolean checkNickname(String nickname) {
-        return nickname.length() <= 20 && nickname.length() >= 1;
+        return nickname.length() <= 20 && !nickname.isEmpty();
     }
 }
