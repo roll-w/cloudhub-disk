@@ -89,7 +89,7 @@ const handleCancel = () => {
 
 const requestSetSetting = () => {
     const config = createConfig()
-    proxy.$axios.put(api.userGroupSetting(true, props.groupId), {
+    proxy.$axios.put(api.userGroupSetting(props.groupId), {
         key: props.settingKey,
         value: unlimitedChecked.value ? '-1' : formValue.value.value
     }, config).then(() => {
