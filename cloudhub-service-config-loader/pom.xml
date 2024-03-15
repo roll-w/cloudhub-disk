@@ -35,10 +35,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>tech.rollw.cloudhub</groupId>
-            <artifactId>cloudhub-client</artifactId>
-        </dependency>
     </dependencies>
 
 </project>
