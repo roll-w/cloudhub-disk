@@ -16,8 +16,6 @@
 
 package tech.rollw.disk.common.conf;
 
-import org.cloudhub.conf.AbstractConfigLoader;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -89,7 +87,7 @@ public class ClientConfigLoader extends AbstractConfigLoader {
 
     public static ClientConfigLoader tryOpenDefault(Class<?> loader) throws IOException {
         return new ClientConfigLoader(
-                openConfigInput(loader)
+                openConfigInput(loader, null)
         );
     }
 }
