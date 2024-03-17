@@ -88,7 +88,7 @@ const getUrl = (password = props.shareInfo.password) => {
 
 const handleCopy = () => {
     const url = getUrl()
-    navigator.clipboard.writeText('Cloudhub 法律案件资料库分享给你：' + url +
+    navigator.clipboard.writeText('Cloudhub 个人文件资料库分享给你：' + url +
             (props.shareInfo.password ? " 提取码：" + props.shareInfo.password + "，" : " ")
             + "点击链接查看或保存文件").then(() => {
         message.success('复制成功')

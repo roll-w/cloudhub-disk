@@ -19,7 +19,7 @@
         <div class="pb-5">
             <n-alert closable type="info">
                 <div class="text-xl">
-                    欢迎使用 Cloudhub 法律文件资料库，您可以在这里上传、下载、分享、管理您的资料文件。
+                    欢迎使用 Cloudhub 个人文件资料库，您可以在这里上传、下载、分享、管理您的资料文件。
                 </div>
             </n-alert>
         </div>
