@@ -34,7 +34,11 @@ public final class UserStatisticsKeys {
             new RestrictKey(USER_STORAGE_COUNT, GroupSettingKeys.GROUP_FILE_NUM_LIMIT),
             USER_STORAGE_USED,
             new RestrictKey(USER_STORAGE_USED, GroupSettingKeys.GROUP_QUOTA,
-                    (strictValue) -> strictValue * 1024 * 1024)// mb to bytes
+                    (strictValue) -> {
+                        if (strictValue <= 0) return strictValue;
+                        return strictValue * 1024 * 1024;
+                    }
+            )// mb to bytes
     );
 
     public static RestrictKey restrictKeyOf(String key) {
