@@ -159,7 +159,7 @@ public class QuartzTimeJobTrigger implements JobTrigger, JobEvent {
 
     @Override
     public long lastExecuteTime() {
-        if (trigger == null) {
+        if (trigger == null || trigger.getPreviousFireTime() == null) {
             return 0;
         }
 
@@ -168,7 +168,7 @@ public class QuartzTimeJobTrigger implements JobTrigger, JobEvent {
 
     @Override
     public long nextExecuteTime() {
-        if (trigger == null) {
+        if (trigger == null || trigger.getNextFireTime() == null) {
             return 0;
         }
         return trigger.getNextFireTime().getTime();
