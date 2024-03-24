@@ -30,7 +30,7 @@ public interface FavoriteProvider {
 
     List<FavoriteGroupInfo> getFavoriteGroups(StorageOwner storageOwner);
 
-    List<FavoriteItemInfo> getFavoriteItems(long favoriteGroupId);
+    List<FavoriteItemInfo> getFavoriteItems(long favoriteGroupId, long userId);
 
     FavoriteGroupInfo getFavoriteGroup(long favoriteGroupId);
 

@@ -48,8 +48,8 @@ public class FavoriteItemRepository extends BaseRepository<FavoriteItem> {
         return FavoriteItem.class;
     }
 
-    public List<FavoriteItem> getByGroup(long groupId) {
-        return cacheResult(favoriteItemDao.getByGroup(groupId));
+    public List<FavoriteItem> getByGroup(long groupId, long userId) {
+        return cacheResult(favoriteItemDao.getByGroup(groupId, userId));
     }
 
     public FavoriteItem getByGroupAndIdentity(long groupId, StorageIdentity storageIdentity) {

@@ -20,7 +20,7 @@ package tech.rollw.disk.web.controller.favorite;
  * @author RollW
  */
 public record FavoriteGroupCreateRequest(
-    String name,
-    boolean isPublic
+        String name,
+        boolean isPublic
 ) {
 }

@@ -76,8 +76,8 @@ public class FavoriteServiceImpl implements
 
     @Override
     public List<FavoriteItemInfo> getFavoriteItems(
-            long favoriteGroupId) {
-        return favoriteItemRepository.getByGroup(favoriteGroupId)
+            long favoriteGroupId, long userId) {
+        return favoriteItemRepository.getByGroup(favoriteGroupId, userId)
                 .stream()
                 .map(FavoriteItemInfo::of)
                 .toList();

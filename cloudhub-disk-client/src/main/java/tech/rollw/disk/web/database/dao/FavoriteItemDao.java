@@ -70,6 +70,9 @@ public interface FavoriteItemDao extends AutoPrimaryBaseDao<FavoriteItem> {
         return "favorite_item";
     }
 
+    @Query("SELECT * FROM favorite_item WHERE group_id = {groupId} AND user_id = {userId}")
+    List<FavoriteItem> getByGroup(long groupId, long userId);
+
     @Query("SELECT * FROM favorite_item WHERE group_id = {groupId}")
     List<FavoriteItem> getByGroup(long groupId);
 

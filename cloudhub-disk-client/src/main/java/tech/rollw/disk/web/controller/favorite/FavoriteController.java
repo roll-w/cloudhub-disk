@@ -1,27 +1,10 @@
-/*
- * Copyright (C) 2023 RollW
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package tech.rollw.disk.web.controller.favorite;
 
+import tech.rollw.disk.common.AuthErrorCode;
+import tech.rollw.disk.common.HttpResponseEntity;
 import tech.rollw.disk.web.common.ApiContextHolder;
 import tech.rollw.disk.web.controller.Api;
-import tech.rollw.disk.web.domain.favorites.FavoriteGroup;
-import tech.rollw.disk.web.domain.favorites.FavoriteOperator;
-import tech.rollw.disk.web.domain.favorites.FavoriteProvider;
-import tech.rollw.disk.web.domain.favorites.FavoriteService;
+import tech.rollw.disk.web.domain.favorites.*;
 import tech.rollw.disk.web.domain.favorites.common.FavoriteErrorCode;
 import tech.rollw.disk.web.domain.favorites.common.FavoriteException;
 import tech.rollw.disk.web.domain.favorites.dto.FavoriteGroupInfo;
@@ -35,7 +18,6 @@ import tech.rollw.disk.web.domain.userstorage.AttributedStorage;
 import tech.rollw.disk.web.domain.userstorage.StorageIdentity;
 import tech.rollw.disk.web.domain.userstorage.UserStorageSearchService;
 import tech.rollw.disk.web.domain.userstorage.dto.SimpleStorageIdentity;
-import tech.rollw.disk.common.HttpResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -81,7 +63,6 @@ public class FavoriteController {
     ) {
         UserIdentity currentUserIdentity =
                 ApiContextHolder.getContext().userInfo();
-
         UserIdentity userIdentity = userProvider.findUser(userId);
         List<FavoriteGroupInfo> favoriteGroupInfos =
                 favoriteProvider.getFavoriteGroups(userIdentity);
@@ -114,6 +95,12 @@ public class FavoriteController {
         UserIdentity userIdentity = ApiContextHolder.getContext().userInfo();
         FavoriteGroupInfo favoriteGroupInfo =
                 favoriteProvider.getFavoriteGroup(groupId);
+        if (favoriteGroupInfo.isPublic()) {
+            return HttpResponseEntity.success(favoriteGroupInfo);
+        }
+        if (userIdentity == null) {
+            throw new FavoriteException(AuthErrorCode.ERROR_PERMISSION_DENIED);
+        }
         if (userIdentity.getOwnerId() != favoriteGroupInfo.id()) {
             throw new FavoriteException(FavoriteErrorCode.ERROR_FAVORITE_NOT_FOUND);
         }
@@ -127,7 +114,9 @@ public class FavoriteController {
     ) {
         UserIdentity userIdentity =
                 ApiContextHolder.getContext().userInfo();
-
+        if (userIdentity == null) {
+            throw new FavoriteException(AuthErrorCode.ERROR_PERMISSION_DENIED);
+        }
         FavoriteGroupInfo favoriteGroupInfo =
                 favoriteProvider.getFavoriteGroup(groupId);
         if (favoriteGroupInfo.userId() != userId) {
@@ -146,15 +135,19 @@ public class FavoriteController {
             @PathVariable Long userId) {
         UserIdentity userIdentity =
                 ApiContextHolder.getContext().userInfo();
+        if (userIdentity == null || userIdentity.getOwnerId() != userId) {
+            throw new FavoriteException(AuthErrorCode.ERROR_PERMISSION_DENIED);
+        }
 
         FavoriteGroupInfo favoriteGroupInfo =
                 favoriteProvider.getFavoriteGroup(groupId);
         checkOwner(favoriteGroupInfo, userIdentity);
 
-        List<FavoriteItemInfo> favoriteItemInfos =
-                favoriteProvider.getFavoriteItems(groupId).stream().filter(
-                        favoriteItemInfo -> !favoriteItemInfo.deleted()
-                ).toList();
+        List<FavoriteItemInfo> favoriteItemInfos = favoriteProvider
+                .getFavoriteItems(groupId, userIdentity.getUserId())
+                .stream()
+                .filter(favoriteItemInfo -> !favoriteItemInfo.deleted())
+                .toList();
 
         List<FavoriteItemVo> favoriteItemVos =
                 convertFavoriteItemInfos(favoriteItemInfos);
@@ -248,12 +241,9 @@ public class FavoriteController {
                         ), true
                 );
         checkOwner(favoriteOperator.getFavoriteGroup(), userIdentity);
-
-
         StorageIdentity storageIdentity = request.toStorageIdentity();
         authorizeStorage(storageIdentity, userIdentity);
-
-        favoriteOperator.addFavorite(storageIdentity);
+        favoriteOperator.addFavorite(storageIdentity, userIdentity);
         return HttpResponseEntity.success();
     }
 

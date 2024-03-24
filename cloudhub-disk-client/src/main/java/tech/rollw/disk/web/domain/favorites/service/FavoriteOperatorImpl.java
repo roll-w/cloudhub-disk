@@ -21,6 +21,7 @@ import tech.rollw.disk.web.domain.favorites.FavoriteItem;
 import tech.rollw.disk.web.domain.favorites.FavoriteOperator;
 import tech.rollw.disk.web.domain.favorites.common.FavoriteErrorCode;
 import tech.rollw.disk.web.domain.favorites.common.FavoriteException;
+import tech.rollw.disk.web.domain.operatelog.Operator;
 import tech.rollw.disk.web.domain.userstorage.StorageIdentity;
 import tech.rollw.disk.common.BusinessRuntimeException;
 import tech.rollw.disk.common.DataErrorCode;
@@ -91,7 +92,7 @@ public class FavoriteOperatorImpl implements FavoriteOperator {
     }
 
     @Override
-    public FavoriteOperator addFavorite(StorageIdentity storageIdentity) {
+    public FavoriteOperator addFavorite(StorageIdentity storageIdentity, Operator operator) {
         checkDeleted();
 
         FavoriteItem favoriteItem =
@@ -111,13 +112,13 @@ public class FavoriteOperatorImpl implements FavoriteOperator {
         long time = System.currentTimeMillis();
         FavoriteItem.Builder favoriteItemBuilder = FavoriteItem.builder()
                 .setFavoriteGroupId(favoriteGroup.getId())
+                .setUserId(operator.getOperatorId())
                 .setStorageId(storageIdentity.getStorageId())
                 .setStorageType(storageIdentity.getStorageType())
+                .setDeleted(false)
                 .setCreateTime(time)
                 .setUpdateTime(time);
-        long id =
-                delegate.createFavoriteItem(favoriteItemBuilder.build());
-
+        long id = delegate.createFavoriteItem(favoriteItemBuilder.build());
         return this;
     }
 

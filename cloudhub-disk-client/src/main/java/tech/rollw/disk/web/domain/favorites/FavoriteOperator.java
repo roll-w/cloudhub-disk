@@ -16,11 +16,12 @@
 
 package tech.rollw.disk.web.domain.favorites;
 
+import tech.rollw.disk.common.BusinessRuntimeException;
+import tech.rollw.disk.web.domain.operatelog.Operator;
 import tech.rollw.disk.web.domain.systembased.SystemResource;
 import tech.rollw.disk.web.domain.systembased.SystemResourceKind;
 import tech.rollw.disk.web.domain.systembased.SystemResourceOperator;
 import tech.rollw.disk.web.domain.userstorage.StorageIdentity;
-import tech.rollw.disk.common.BusinessRuntimeException;
 
 /**
  * @author RollW
@@ -46,7 +47,7 @@ public interface FavoriteOperator extends SystemResourceOperator, SystemResource
 
     FavoriteOperator setVisibility(boolean publicVisible);
 
-    FavoriteOperator addFavorite(StorageIdentity storageIdentity);
+    FavoriteOperator addFavorite(StorageIdentity storageIdentity, Operator operator);
 
     FavoriteOperator removeFavorite(StorageIdentity storageIdentity);
 
