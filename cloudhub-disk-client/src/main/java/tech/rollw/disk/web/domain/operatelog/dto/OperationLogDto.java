@@ -43,7 +43,7 @@ public record OperationLogDto(
 
     public static OperationLogDto from(OperationLog operationLog,
                                        OperateType operateType) {
-        if (operationLog == null) {
+        if (operationLog == null || operateType == null) {
             return null;
         }
         return new OperationLogDto(
