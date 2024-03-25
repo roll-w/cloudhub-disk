@@ -16,6 +16,10 @@
 
 package tech.rollw.disk.web.controller.user;
 
+import org.springframework.web.bind.annotation.*;
+import tech.rollw.disk.common.HttpResponseEntity;
+import tech.rollw.disk.common.data.page.Page;
+import tech.rollw.disk.common.data.page.Pageable;
 import tech.rollw.disk.web.controller.AdminApi;
 import tech.rollw.disk.web.controller.OneParameterRequest;
 import tech.rollw.disk.web.controller.user.vo.UserCreateRequest;
@@ -30,15 +34,6 @@ import tech.rollw.disk.web.domain.user.UserOperator;
 import tech.rollw.disk.web.domain.user.dto.LoginLog;
 import tech.rollw.disk.web.domain.user.service.UserManageService;
 import tech.rollw.disk.web.domain.user.vo.UserDetailsVo;
-import tech.rollw.disk.common.HttpResponseEntity;
-import tech.rollw.disk.common.data.page.Page;
-import tech.rollw.disk.common.data.page.Pageable;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -155,4 +150,15 @@ public class UserManageController {
         );
     }
 
+    @GetMapping("/users/{userId}/login/logs")
+    public HttpResponseEntity<List<LoginLog>> getLoginLogs(
+            @PathVariable("userId") Long userId,
+            Pageable pageable) {
+        List<LoginLog> loginLogs = loginLogService.getUserLogs(userId,
+                pageable);
+        long count = loginLogService.getUserLogsCount(userId);
+        return HttpResponseEntity.success(
+                Page.of(pageable, count, loginLogs)
+        );
+    }
 }
