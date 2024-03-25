@@ -514,7 +514,6 @@ public class Keywords implements Map<String, List<Keywords.Keyword>> {
                 }
                 writer.println();
             }
-            writer.flush();
         }
         writer.flush();
     }
