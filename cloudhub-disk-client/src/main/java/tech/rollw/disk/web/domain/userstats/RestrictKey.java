@@ -43,6 +43,9 @@ public record RestrictKey(
     }
 
     public long toValue(String restrictValue) {
+        if (restrictValue == null) {
+            return 0;
+        }
         return toValue.apply(Long.parseLong(restrictValue));
     }
 }

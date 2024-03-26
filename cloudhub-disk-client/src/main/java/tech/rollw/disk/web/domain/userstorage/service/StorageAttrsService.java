@@ -162,6 +162,10 @@ public class StorageAttrsService implements StorageAttributesService {
                 return List.of();
             }
             loaded = true;
+            if (currentOffset == null) {
+                currentOffset = new Offset(1000, 0);
+            }
+
             List<StorageMetadata> storageMetadata =
                     storageMetadataRepository.get(currentOffset);
             List<TaggedValue> taggedValues =
