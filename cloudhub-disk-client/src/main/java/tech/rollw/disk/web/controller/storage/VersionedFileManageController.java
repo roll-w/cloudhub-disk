@@ -16,7 +16,7 @@
 
 package tech.rollw.disk.web.controller.storage;
 
-import tech.rollw.disk.web.controller.Api;
+import tech.rollw.disk.web.controller.AdminApi;
 import tech.rollw.disk.web.controller.ParameterHelper;
 import tech.rollw.disk.web.domain.user.AttributedUser;
 import tech.rollw.disk.web.domain.user.service.UserSearchService;
@@ -28,25 +28,23 @@ import tech.rollw.disk.web.domain.versioned.VersionedFileService;
 import tech.rollw.disk.web.domain.versioned.VersionedFileStorage;
 import tech.rollw.disk.web.domain.versioned.vo.VersionedStorageVo;
 import tech.rollw.disk.common.HttpResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author RollW
  */
-@Api
-public class VersionedFileController {
+@AdminApi
+public class VersionedFileManageController {
     private final UserStorageSearchService userStorageSearchService;
     private final UserSearchService userSearchService;
     private final VersionedFileService versionedFileService;
 
-    public VersionedFileController(UserStorageSearchService userStorageSearchService,
-                                   UserSearchService userSearchService,
-                                   VersionedFileService versionedFileService) {
+    public VersionedFileManageController(UserStorageSearchService userStorageSearchService,
+                                         UserSearchService userSearchService,
+                                         VersionedFileService versionedFileService) {
         this.userStorageSearchService = userStorageSearchService;
         this.userSearchService = userSearchService;
         this.versionedFileService = versionedFileService;
@@ -79,33 +77,7 @@ public class VersionedFileController {
                 userSearchService.findUsers(userIds);
 
         return HttpResponseEntity.success(
-                buildVersionedStorageVos(fileStorages, attributedUsers)
+                VersionedFileController.buildVersionedStorageVos(fileStorages, attributedUsers)
         );
     }
-
-    public static List<VersionedStorageVo> buildVersionedStorageVos(
-            List<VersionedFileStorage> fileStorages,
-            List<? extends AttributedUser> attributedUsers) {
-        List<VersionedStorageVo> versionedStorageVos = new ArrayList<>();
-        for (VersionedFileStorage fileStorage : fileStorages) {
-            AttributedUser attributedUser = UserSearchService.binarySearch(
-                    fileStorage.getOperator(),
-                    attributedUsers
-            );
-            VersionedStorageVo versionedStorageVo = VersionedStorageVo.of(fileStorage, attributedUser);
-            versionedStorageVos.add(versionedStorageVo);
-        }
-        return versionedStorageVos;
-    }
-
-    @GetMapping("/{ownerType}/{ownerId}/disk/{storageType}/{storageId}/versions/{version}")
-    public HttpResponseEntity<VersionedStorageVo> getVersion() {
-        return HttpResponseEntity.success();
-    }
-
-    @DeleteMapping("/{ownerType}/{ownerId}/disk/{storageType}/{storageId}/versions/{version}")
-    public HttpResponseEntity<Void> deleteVersion() {
-        return HttpResponseEntity.success();
-    }
-
 }

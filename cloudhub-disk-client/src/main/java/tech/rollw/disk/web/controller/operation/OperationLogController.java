@@ -18,11 +18,13 @@ package tech.rollw.disk.web.controller.operation;
 
 import tech.rollw.disk.web.common.ApiContextHolder;
 import tech.rollw.disk.web.controller.Api;
+import tech.rollw.disk.web.domain.operatelog.Action;
 import tech.rollw.disk.web.domain.operatelog.OperationLogCountProvider;
 import tech.rollw.disk.web.domain.operatelog.OperationService;
 import tech.rollw.disk.web.domain.operatelog.dto.OperationLogDto;
 import tech.rollw.disk.web.domain.operatelog.vo.OperationLogVo;
 import tech.rollw.disk.web.domain.systembased.SimpleSystemResource;
+import tech.rollw.disk.web.domain.systembased.SystemResourceAuthenticate;
 import tech.rollw.disk.web.domain.systembased.SystemResourceException;
 import tech.rollw.disk.web.domain.systembased.SystemResourceKind;
 import tech.rollw.disk.web.domain.user.AttributedUser;
@@ -57,6 +59,11 @@ public class OperationLogController {
         this.pageableInterceptor = pageableInterceptor;
     }
 
+    @SystemResourceAuthenticate(
+            inferredKind = false, kindParam = "kind",
+            inferredAction = false, action = Action.ACCESS,
+            idParam = "systemResourceId"
+    )
     @GetMapping("/{systemResourceKind}/{systemResourceId}/operations/logs")
     public HttpResponseEntity<List<OperationLogVo>> getOperationLogs(
             @PathVariable("systemResourceKind") String kind,
@@ -64,7 +71,6 @@ public class OperationLogController {
             Pageable pageable) {
         SystemResourceKind systemResourceKind =
                 SystemResourceKind.from(kind);
-        // TODO: auth system resource
         if (systemResourceKind == null) {
             throw new SystemResourceException(DataErrorCode.ERROR_DATA_NOT_EXIST,
                     "Not found system resource kind: " + kind);

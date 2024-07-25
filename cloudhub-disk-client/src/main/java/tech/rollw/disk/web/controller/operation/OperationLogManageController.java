@@ -16,6 +16,9 @@
 
 package tech.rollw.disk.web.controller.operation;
 
+import tech.rollw.disk.common.DataErrorCode;
+import tech.rollw.disk.common.HttpResponseEntity;
+import tech.rollw.disk.common.data.page.Pageable;
 import tech.rollw.disk.web.controller.AdminApi;
 import tech.rollw.disk.web.domain.operatelog.OperationLog;
 import tech.rollw.disk.web.domain.operatelog.OperationLogCountProvider;
@@ -29,9 +32,6 @@ import tech.rollw.disk.web.domain.user.AttributedUser;
 import tech.rollw.disk.web.domain.user.service.UserManageService;
 import tech.rollw.disk.web.domain.user.service.UserSearchService;
 import tech.rollw.disk.web.system.pages.PageableInterceptor;
-import tech.rollw.disk.common.DataErrorCode;
-import tech.rollw.disk.common.HttpResponseEntity;
-import tech.rollw.disk.common.data.page.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -118,11 +118,10 @@ public class OperationLogManageController {
     }
 
 
-    @GetMapping("/user/{userId}/operations/logs")
+    @GetMapping("/users/{userId}/operations/logs")
     public HttpResponseEntity<List<OperationLogVo>> getOperationLogsByUser(
             @PathVariable("userId") Long userId,
             Pageable pageable) {
-        // current user
         AttributedUser attributedUser = userManageService.getUser(userId);
         List<OperationLogDto> operationLogDtos = operationService.getOperationsByUserId(
                 userId,
