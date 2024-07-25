@@ -3,8 +3,6 @@
 A cloud-disk-like web application based on SpringBoot and
 [Cloudhub File System](https://github.com/Roll-W/cloudhub).
 
-Demo is available at [Cloudhub](https://cloudhub.team).
-
 ## Features
 
 - User management (register, login, logout, etc.) and user group management
@@ -44,11 +42,6 @@ includes upload, download, delete, rename, move, copy, etc.
 4. Run
 
     Run the shell script `start-disk-client-server.sh` in the `sbin` folder to start the server.
-
-## Contributing
-
-Pull requests are welcome.
-For major changes, please open an issue first to discuss what you would like to change.
 
 ## License 
 
