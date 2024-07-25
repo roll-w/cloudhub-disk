@@ -32,7 +32,7 @@ const dialog = useDialog()
 const users = ref([])
 
 const keyword = router.currentRoute.value.query.keyword || ''
-const inputRef = ref(keyword)
+const inputRef = ref(decodeURI(keyword))
 
 const handleSearch = () => {
     router.push({

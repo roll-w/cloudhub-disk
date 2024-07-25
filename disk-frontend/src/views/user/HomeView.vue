@@ -16,7 +16,6 @@
 
 <template>
     <div class="flex flex-fill flex-grow w-100 h-100vh h-full bg-no-repeat bg-cover bg-center bg">
-
         <div class="w-100 h-100 backdrop-blur-3xl">
             <div class="flex flex-col w-100 px-16 p-6 h-100">
                 <div class="flex px-5 ">
@@ -29,10 +28,10 @@
                 </div>
                 <div class="flex flex-col p-5 flex-1">
                     <div class="leading-tight sm:leading-tight text-4xl sm:text-6xl font-extrabold text-black ">
-                        Cloudhub<br>个人文件资料库
+                        个人文件资料库
                     </div>
                     <div class="flex-fill py-7 text-[#4f4662] text-2xl leading-relaxed sm:w-2/5">
-                        Cloudhub 个人文件资料库是一个专业的个人文件资料库。可以快速、安全、便捷的管理您的个人文件资料。
+                        一个专业的个人文件资料库。可以快速、安全、便捷的管理您的个人文件资料。
                     </div>
                 </div>
 
@@ -47,7 +46,7 @@
                     </div>
                     <div class="text-[#4f4662] opacity-70
                     transition-all hover:text-black hover:opacity-100 hover:drop-shadow hover:shadow-white">
-                        ©2023 Cloudhub. All rights reserved. 版权所有
+                        ©2023 RollW. All rights reserved. 版权所有
                         <br>
                         <a v-if="icp" class="hover:underline hover:underline-offset-4" href="https://beian.miit.gov.cn/"
                            target="_blank">

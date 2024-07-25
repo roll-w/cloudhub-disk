@@ -101,7 +101,7 @@ const getLogs = () => {
         page: page.value.page
     }
 
-    proxy.$axios.get(api.getLoginLogs, config).then((res) => {
+    proxy.$axios.get(api.loginLogs(), config).then((res) => {
         page.value.count = Math.ceil(res.total / res.size)
         page.value.page = res.page
         let index = (res.page - 1) * res.size + 1

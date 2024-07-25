@@ -39,6 +39,7 @@ const props = defineProps({
         default: ''
     },
     type: {
+        // type: text, switch, checkbox, select, date, image
         type: String,
         default: 'text'
     },
@@ -96,6 +97,14 @@ const getFormattedValue = () => {
                   :options="config.options"
                   size="large"
                   @update:value="emit('update:value', $event)"/>
+        <n-date-picker v-else-if="config.type === 'date'"
+                       v-model:value="inputValue"
+                       size="large"
+                       @update:value="emit('update:value', $event)"/>
+        <n-image v-else-if="config.type === 'image'"
+                 :src="inputValue"
+                 size="large"
+                 @update:value="emit('update:value', $event)"/>
         <n-input v-else-if="config.modify"
                  v-model:value="inputValue"
                  :placeholder="config.placeholder"
