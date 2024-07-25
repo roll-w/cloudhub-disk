@@ -31,7 +31,6 @@ import {
     adminTags,
     adminUserGroupLists,
     adminUserLists,
-    adminVisualData,
     driveFilePage,
     driveFilePageFolder,
     driveFilePageTypeAudio,
@@ -241,11 +240,6 @@ const menuOptions = [
                         key: "organization-management-list"
                     },
                 ]
-            },
-            {
-                name: "可视化数据",
-                key: adminVisualData,
-                linked: true
             },
             {
                 name: "系统管理",

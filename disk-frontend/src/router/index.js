@@ -79,8 +79,6 @@ export const adminTags = "admin-tags"
 export const adminTagInfo = "admin-tag-info"
 export const adminTagGroupInfo = "admin-tag-group-info"
 
-export const adminVisualData = "admin-visual-data"
-
 export const adminSystemLogs = "admin-system-logs"
 export const adminLoginLogs = "admin-login-logs"
 export const adminSystemJobs = "admin-system-jobs"
@@ -471,15 +469,6 @@ const router = createRouter({
                     component: () => import("@/views/admin/tag/AdminTagInfoView.vue"),
                     meta: {
                         title: "标签信息",
-                        requireLogin: true
-                    }
-                },
-                {
-                    path: '/admin/data',
-                    name: adminVisualData,
-                    component: () => import("@/views/EchartsIndexView.vue"),
-                    meta: {
-                        title: "数据分析",
                         requireLogin: true
                     }
                 },
