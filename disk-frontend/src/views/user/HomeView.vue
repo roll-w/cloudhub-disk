@@ -46,16 +46,8 @@
                     </div>
                     <div class="text-[#4f4662] opacity-70
                     transition-all hover:text-black hover:opacity-100 hover:drop-shadow hover:shadow-white">
-                        ©2023 RollW. All rights reserved. 版权所有
+                        <a href="https://github.com/Roll-W" target="_blank">©2023 RollW. All rights reserved. 版权所有</a>
                         <br>
-                        <a v-if="icp" class="hover:underline hover:underline-offset-4" href="https://beian.miit.gov.cn/"
-                           target="_blank">
-                            {{ icp }}
-                        </a>
-                        <br>
-                        <a v-if="beian" href="https://www.beian.gov.cn/" target="_blank">
-                            {{ beian }}
-                        </a>
                     </div>
                 </div>
             </div>
@@ -65,13 +57,11 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
 import {useUserStore} from "@/stores/user";
 import {useRouter} from "vue-router";
 import {driveFilePage} from "@/router";
 import Logo from "@/components/icon/Logo.vue";
 
-const current = ref(null)
 const userStore = useUserStore()
 
 const router = useRouter()
@@ -83,9 +73,6 @@ const checkLogin = () => {
         })
     }
 }
-
-const icp = ((window.cloudhub || {}).server || {}).icp
-const beian = ((window.cloudhub || {}).server || {}).beian
 
 </script>
 
