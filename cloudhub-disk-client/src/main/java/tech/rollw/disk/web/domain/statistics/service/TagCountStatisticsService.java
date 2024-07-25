@@ -343,20 +343,17 @@ public class TagCountStatisticsService implements StatisticJobTask, StatisticsPe
     @NonNull
     private static List<TagValueCount> getTagValueCounts(List<ContentTagInfo> tagInfos,
                                                          List<ImmutableTagCount> tagCountList) {
-        List<TagValueCount> tagValueCounts = new ArrayList<>();
-        tagCountList.forEach(tagCount -> {
+        return tagCountList.stream().map(tagCount -> {
             ContentTagInfo tagInfo = tagInfos.stream()
                     .filter(info -> info.id() == tagCount.tagId())
                     .findFirst()
                     .orElse(null);
             if (tagInfo == null) {
-                return;
+                return null;
             }
-            TagValueCount tagValueCount = new TagValueCount(
+            return new TagValueCount(
                     tagInfo.id(), tagInfo.name(), tagCount.count());
-            tagValueCounts.add(tagValueCount);
-        });
-        return tagValueCounts;
+        }).filter(Objects::nonNull).toList();
     }
 
     private static final class TagCount {
@@ -394,7 +391,7 @@ public class TagCountStatisticsService implements StatisticJobTask, StatisticsPe
             if (obj == null || obj.getClass() != this.getClass()) return false;
             var that = (TagCount) obj;
             return this.tagId == that.tagId &&
-                    this.count == that.count;
+                    (this.count.get() == that.count.get());
         }
 
         @Override

@@ -16,7 +16,11 @@
 
 package tech.rollw.disk.web.jobs.trigger;
 
-import tech.rollw.disk.web.jobs.*;
+import tech.rollw.disk.web.jobs.JobEvent;
+import tech.rollw.disk.web.jobs.JobExecutor;
+import tech.rollw.disk.web.jobs.JobStatus;
+import tech.rollw.disk.web.jobs.JobTask;
+import tech.rollw.disk.web.jobs.JobTrigger;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

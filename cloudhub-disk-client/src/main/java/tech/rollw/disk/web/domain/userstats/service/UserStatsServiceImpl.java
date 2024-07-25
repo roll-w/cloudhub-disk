@@ -80,6 +80,7 @@ public class UserStatsServiceImpl implements UserStatisticsService, UserDataView
         UserGroupInfo userGroupInfo =
                 userGroupSearchService.findUserGroupsByUser(storageOwner);
         String restrictValue =
+                // TODO: fix load default settings
                 userGroupInfo.settings().get(restrictKey.getRestrictKey());
         long value = restrictKey.toValue(restrictValue);
         return new RestrictInfo(key, userValue, value);
